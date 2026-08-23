@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard — ShortTrack</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c5cff'/%3E%3Cstop offset='1' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='800' text-anchor='middle' fill='white' font-family='Arial'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" width="26" height="26"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/></svg>
+      ShortTrack
+    </div>
+    <nav class="side-nav">
+      <button data-view="overview" class="active">📊 Dashboard</button>
+      <button data-view="links">🔗 My Links</button>
+      <button data-view="analytics">📈 Analytics</button>
+    </nav>
+    <div class="user-chip">
+      <span class="u" id="userName">…</span>
+      <button class="btn btn-sm btn-ghost btn-danger" id="logoutBtn">Logout</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 id="pageTitle">Dashboard</h1>
+      <button class="btn btn-primary" id="newLinkBtn">＋ New link</button>
+    </div>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section id="view-overview">
+      <div class="stat-grid">
+        <div class="stat"><div class="v" id="stTotalLinks">0</div><div class="k">Total links</div></div>
+        <div class="stat"><div class="v" id="stTotalClicks">0</div><div class="k">Total clicks</div></div>
+        <div class="stat"><div class="v" id="stClicks7d">0</div><div class="k">Clicks (last 7 days)</div></div>
+        <div class="stat"><div class="v" id="stLinks7d">0</div><div class="k">Links (last 7 days)</div></div>
+      </div>
+      <div class="card">
+        <h3>Recent links</h3>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Code</th><th>Destination</th><th>Clicks</th><th>Created</th><th></th></tr></thead>
+          <tbody id="recentBody"></tbody>
+        </table></div>
+        <div class="empty" id="overviewEmpty" style="display:none">No links yet — create your first one!</div>
+      </div>
+    </section>
+
+    <!-- ============ MY LINKS ============ -->
+    <section id="view-links" hidden>
+      <div class="card" style="margin-bottom:22px">
+        <h3>Create a short link</h3>
+        <div class="field">
+          <label for="cUrl">Destination URL</label>
+          <input class="input" id="cUrl" placeholder="https://example.com/your-video.mp4">
+        </div>
+        <div class="field">
+          <label for="cCode">Custom code (optional)</label>
+          <input class="input" id="cCode" placeholder="myvideo  →  3-12 letters/numbers">
+        </div>
+        <div style="display:flex;gap:26px;flex-wrap:wrap;margin-bottom:16px">
+          <label class="switch"><input type="checkbox" id="cMp4"><span class="track"></span><span><span class="lbl">MP4-style link</span><span class="hint">/code.mp4 — looks like a direct video file</span></span></label>
+          <label class="switch"><input type="checkbox" id="cWait"><span class="track"></span><span><span class="lbl">Wait page (2s)</span><span class="hint">"Mohon Tunggu" interstitial before redirect</span></span></label>
+        </div>
+        <button class="btn btn-primary" id="createBtn">Create link</button>
+        <div class="error" id="createErr"></div>
+        <div class="result-box" id="resultBox">
+          <div class="result-row"><code id="rShort"></code><button class="btn btn-sm" data-copy="rShort">Copy</button></div>
+          <div class="result-row"><code id="rMp4"></code><button class="btn btn-sm" data-copy="rMp4">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="card" id="teamCard" style="display:none;margin-bottom:22px">
+        <h3>Team — add member</h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px">
+          <input class="input" id="tmUser" placeholder="username (3-20 chars)" style="flex:1;min-width:160px">
+          <input class="input" id="tmPass" placeholder="password (min 6 chars)" style="flex:1;min-width:160px">
+          <button class="btn btn-primary" id="tmAdd">Add member</button>
+        </div>
+        <div class="error" id="tmErr"></div>
+        <ul class="referers" id="tmList" style="margin-top:10px"></ul>
+      </div>
+
+      <div class="card">
+        <h3>All links</h3>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Link</th><th>Destination</th><th>Clicks</th><th>Created</th><th>Actions</th></tr></thead>
+          <tbody id="linksBody"></tbody>
+        </table></div>
+        <div class="empty" id="linksEmpty" style="display:none">No links yet.</div>
+      </div>
+    </section>
+
+    <!-- ============ ANALYTICS ============ -->
+    <section id="view-analytics" hidden>
+      <div class="back-row">
+        <button class="btn btn-sm btn-ghost" id="backBtn">← Back</button>
+      </div>
+      <div class="card" style="margin-bottom:20px">
+        <h3 id="anLinkTitle">Analytics</h3>
+        <p class="muted" id="anLinkDest" style="word-break:break-all"></p>
+      </div>
+      <div class="chip-row">
+        <div class="chip"><div class="v" id="anTotal">0</div><div class="k">Total clicks</div></div>
+        <div class="chip"><div class="v" id="an7d">0</div><div class="k">Last 7 days</div></div>
+        <div class="chip"><div class="v" id="anTopCountry">—</div><div class="k">Top country</div></div>
+        <div class="chip"><div class="v" id="anTopDevice">—</div><div class="k">Top device</div></div>
+      </div>
+      <div class="charts-grid">
+        <div class="card"><h3>Clicks per day (14 days)</h3><div class="chart-box"><canvas id="chartLine"></canvas></div></div>
+        <div class="card"><h3>Devices</h3><div class="chart-box"><canvas id="chartDoughnut"></canvas></div></div>
+        <div class="card"><h3>Countries</h3><div class="chart-box"><canvas id="chartBar"></canvas></div></div>
+        <div class="card"><h3>Referrers</h3><ul class="referers" id="anReferers"></ul></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

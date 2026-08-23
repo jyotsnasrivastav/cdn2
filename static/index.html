@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShortTrack — Shorten links. Track every click.</title>
+<meta name="description" content="Free link shortener with click analytics: MP4-style links, country/device tracking, team accounts.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c5cff'/%3E%3Cstop offset='1' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-size='52' font-weight='800' text-anchor='middle' fill='white' font-family='Arial'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/></svg>
+    ShortTrack
+  </div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <button class="btn btn-sm" id="navLogin">Login</button>
+    <button class="btn btn-sm btn-primary" id="navSignup">Get started</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="badge">● Free forever · No signup needed to open links</span>
+  <h1>Shorten it.<br><span class="grad">Track every click.</span></h1>
+  <p>Create short links — even MP4-style ones — and see exactly who clicks them: country, device, referer and time. Perfect for videos, campaigns and your team.</p>
+  <div class="hero-cta">
+    <button class="btn btn-primary" id="heroCta">Create free account</button>
+    <a class="btn btn-ghost" href="#features">See features</a>
+  </div>
+</header>
+
+<section class="features" id="features">
+  <div class="feature">
+    <div class="ico">🔗</div>
+    <h3>Link shortening</h3>
+    <p>Paste any URL, get a clean short link in one click. Custom codes supported — <code>/myshop</code> instead of random letters.</p>
+  </div>
+  <div class="feature">
+    <div class="ico">🎬</div>
+    <h3>MP4-style links</h3>
+    <p>Links that end in <code>.mp4</code> and look like direct video files — perfect for sharing videos on chats and groups.</p>
+  </div>
+  <div class="feature">
+    <div class="ico">📊</div>
+    <h3>Click analytics</h3>
+    <p>Every click logged: IP, country, device, referer and time. Per-link dashboards with 14-day trends and breakdowns.</p>
+  </div>
+  <div class="feature">
+    <div class="ico">👥</div>
+    <h3>Team accounts</h3>
+    <p>Every team member gets their own account. Everyone sees only their own links — clean, private, organised.</p>
+  </div>
+  <div class="feature">
+    <div class="ico">⏱️</div>
+    <h3>Wait page (optional)</h3>
+    <p>Turn on the 2-second "Mohon Tunggu" interstitial before the redirect — the classic video-link pattern.</p>
+  </div>
+  <div class="feature">
+    <div class="ico">🛡️</div>
+    <h3>Redirect protection</h3>
+    <p>Rate limiting on redirects (max 4 opens per hour per IP) keeps your links from being hammered by scrapers.</p>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <h2>How it works</h2>
+  <div class="how-grid">
+    <div class="step"><div class="num">1</div><h3>Create your account</h3><p>Free signup — just a username and password. Takes 10 seconds.</p></div>
+    <div class="step"><div class="num">2</div><h3>Shorten a link</h3><p>Paste your URL, optionally pick a custom code and MP4-style mode.</p></div>
+    <div class="step"><div class="num">3</div><h3>Track every click</h3><p>Share the link anywhere. Watch the analytics dashboard fill up in real time.</p></div>
+  </div>
+</section>
+
+<footer>ShortTrack — a complete link shortener &amp; analytics platform. Built as a full A-to-Z implementation of the vidy.my link mechanism.</footer>
+
+<!-- Auth modal -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="close" id="authClose">×</button>
+    <h2 id="authTitle">Welcome back</h2>
+    <p class="muted" id="authSub">Sign in to your account</p>
+    <div class="tabs">
+      <button id="tabLogin" class="active">Login</button>
+      <button id="tabSignup">Sign up</button>
+    </div>
+    <form id="authForm">
+      <div class="field">
+        <label for="aUser">Username</label>
+        <input class="input" id="aUser" autocomplete="username" placeholder="3-20 chars, letters/numbers/_" required>
+      </div>
+      <div class="field">
+        <label for="aPass">Password</label>
+        <input class="input" id="aPass" type="password" autocomplete="current-password" placeholder="min 6 characters" required>
+      </div>
+      <div class="field" id="inviteField" style="display:none">
+        <label for="aInvite">Invite code</label>
+        <input class="input" id="aInvite" placeholder="team invite code">
+      </div>
+      <div class="error" id="authErr"></div>
+      <button class="btn btn-primary btn-block" type="submit" id="authBtn">Sign in</button>
+    </form>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
