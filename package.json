@@ -1,0 +1,13 @@
+{
+  "name": "shorttrack",
+  "version": "2.0.0",
+  "description": "Full link shortener + click analytics (vidy.my-style): UI dashboard, MP4-style links, wait pages, per-link stats, multi-user accounts",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.19.2"
+  }
+}
